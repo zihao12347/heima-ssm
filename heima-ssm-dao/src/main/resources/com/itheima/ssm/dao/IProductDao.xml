@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--mybatis的(DTD)文档类型约束，进行相关标签的提示和约束-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.ssm.dao.IProductDao">
+
+    <select id="findAll" resultType="product">
+        select * from product
+    </select>
+    <insert id="save" parameterType="product">
+        insert into
+        product(productNum,productName,cityName,departureTime,productPrice,productDesc,productStatus)
+        values(#{productNum},#{productName},#{cityName},#{departureTime},#{productPrice},#{productDesc},#{productStatus}) </insert>
+
+    <select id="findById" resultType="product">
+        select * from product where id=#{id}
+    </select>
+</mapper>

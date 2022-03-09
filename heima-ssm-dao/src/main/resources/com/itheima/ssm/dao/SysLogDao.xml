@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--mybatis的(DTD)文档类型约束，进行相关标签的提示和约束-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.ssm.dao.SysLogDao">
+    <insert id="saveLog" parameterType="syslog">
+        insert into syslog (visittime,username,ip,url,executionTime,method)values
+        (#{visittime},#{username},#{ip},#{url},#{executiontime},#{method})
+    </insert>
+    <select id="findAllSysLog" resultType="syslog">
+        select * from syslog
+    </select>
+</mapper>

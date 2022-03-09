@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--mybatis的(DTD)文档类型约束，进行相关标签的提示和约束-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.ssm.dao.PermissionDao">
+    <select id="findByRid" resultType="permission">
+        select * from permission p ,role_permission rp where rp.permissionid=p.id and rp.roleid=#{id}
+    </select>
+    <select id="findAll" resultType="permission">
+        select * from permission
+    </select>
+
+    <delete id="deleteByRid">
+        delete from role_permission where roleid=#{roleid}
+    </delete>
+
+    <insert id="save" parameterType="permission">
+        insert into permission (permissionName,url)values(#{permissionName},#{url})
+    </insert>
+    <delete id="deleteById">
+        delete from permission where id=#{id}
+    </delete>
+    <select id="findOtherPermissions" resultType="permission" parameterType="string">
+        select * from permission where id not in (select permissionid from role_permission where roleid =#{rid} )
+    </select>
+    <insert id="addPermissionToRole">
+        insert into role_permission (permissionid,roleid) values
+        <foreach collection="ids" separator="," item="permissionId">
+            (#{permissionId},#{roleId})
+        </foreach>
+    </insert>
+</mapper>

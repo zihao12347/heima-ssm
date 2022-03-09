@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--mybatis的(DTD)文档类型约束，进行相关标签的提示和约束-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.ssm.dao.IUserDao">
+    <resultMap id="findByIdResultMap" type="userInfo">
+        <id column="id" property="id"/>
+        <collection property="roles"  ofType="role" autoMapping="true"
+                    column="id" select="com.itheima.ssm.dao.IRoleDao.findByUid">
+        </collection>
+    </resultMap>
+    <select id="findById" resultMap="findByIdResultMap">
+        select * from users where id = #{id}
+    </select>
+    <select id="findAll" resultType="userInfo">
+        select * from users
+    </select>
+
+    <insert id="save" parameterType="userinfo">
+        insert into users (username,email,password,phoneNum,status)
+        values(#{username},#{email},#{password},#{phoneNum},#{status})
+    </insert>
+    <delete id="deleteByRid">
+        delete from users_role where roleid=#{id}
+    </delete>
+    <select id="findOtherRoles" resultType="role">
+        select * from role where id not in (select  roleid from  users_role where userid=#{id})
+    </select>
+    <insert id="addRoleToUser" >
+        insert into  users_role (userid,roleid) values
+        <foreach collection="ids" item="roleId" separator=",">
+            (#{userId},#{roleId})
+        </foreach>
+    </insert>
+</mapper>

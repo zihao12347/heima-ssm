@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--mybatis的(DTD)文档类型约束，进行相关标签的提示和约束-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.ssm.dao.IMemberDao">
+    <select id="findById" resultType="member">
+        select * from member where id = #{id}
+    </select>
+</mapper>

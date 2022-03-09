@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--mybatis的(DTD)文档类型约束，进行相关标签的提示和约束-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.ssm.dao.IRoleDao">
+    <resultMap id="findByUidResultMap" type="role">
+        <id column="id" property="id"/>
+        <collection property="permissions" ofType="com.itheima.ssm.domain.Permission" autoMapping="true"
+                    column="id" select="com.itheima.ssm.dao.PermissionDao.findByRid">
+        </collection>
+    </resultMap>
+    <select id="findByUid" resultMap="findByUidResultMap">
+        select * from role r , users_role ur
+        where r.id = ur.roleid and ur.userid =#{id}
+    </select>
+
+    <select id="findAll" resultType="role">
+        select * from role
+    </select>
+
+    <insert id="save" parameterType="role">
+        insert into role (roleName,roleDesc)
+        values(#{roleName},#{roleDesc})
+    </insert>
+
+    <select id="findById" resultMap="findByUidResultMap">
+        select * from role r
+        where r.id = #{id}
+    </select>
+
+    <delete id="delete">
+        delete from role where id=#{id}
+    </delete>
+</mapper>

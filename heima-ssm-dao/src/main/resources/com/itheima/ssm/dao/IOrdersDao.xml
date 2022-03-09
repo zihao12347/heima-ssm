@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--mybatis的(DTD)文档类型约束，进行相关标签的提示和约束-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.ssm.dao.IOrdersDao">
+    <resultMap id="findAllResultMap" type="orders" autoMapping="true">
+        <id property="id" column="id"/>
+        <association property="product" javaType="product" autoMapping="true"
+                     column="productid" select="com.itheima.ssm.dao.IProductDao.findById"/>
+    </resultMap>
+    <select id="findAll" resultMap="findAllResultMap">
+        select *
+        from orders
+    </select>
+    <resultMap id="findByIdResultMap" type="orders" autoMapping="true">
+        <id property="id" column="id"/>
+        <!--查询产品关联表：多对一-->
+        <association property="product" javaType="product" autoMapping="true"
+                     column="productid" select="com.itheima.ssm.dao.IProductDao.findById"/>
+        <!--查询会员关联表：多对一-->
+        <association property="member" javaType="com.itheima.ssm.domain.Member" autoMapping="true"
+                     column="memberid" select="com.itheima.ssm.dao.IMemberDao.findById"/>
+        <collection property="travellers" ofType="com.itheima.ssm.domain.Traveller" autoMapping="true"
+                    column="id" select="com.itheima.ssm.dao.TravellerDao.findByOid"/>
+    </resultMap>
+    <select id="findById" resultMap="findByIdResultMap">
+        select *
+        from orders
+        where id = #{id}
+    </select>
+</mapper>
